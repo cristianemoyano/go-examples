@@ -13,3 +13,9 @@ $ go build hello.go
 $ ./hello
 hello, world
 ```
+
+or without build
+
+```go
+$ go run hello.go
+```
