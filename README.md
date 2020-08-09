@@ -24,3 +24,6 @@ $ go run hello.go
 
 https://golang.org/doc/articles/wiki/
 
+## Telegram bot
+
+https://www.sohamkamani.com/golang/telegram-bot/
