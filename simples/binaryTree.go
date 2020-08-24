@@ -34,6 +34,17 @@ func (t *TreeNode) AppendListInOrder(s *[]int) {
 	t.right.AppendListInOrder(s)
 }
 
+// func (tree *TreeNode) insertSorted(value int, slice *[]int) *TreeNode {
+// 	if tree == nil {
+// 		return nil
+// 	}
+// 	tree.Insert(value)
+// 	tree.AppendListInOrder(slice)
+// 	printSlice(*slice)
+// 	tree = InsertByList(*slice)
+// 	return tree
+// }
+
 //Print prints the elements without sorting
 func (t *TreeNode) Print() {
 	if t == nil {
@@ -99,6 +110,7 @@ func (t *TreeNode) InsertInOrder(value int) error {
 			t.right = &TreeNode{val: value, left: nil, right: nil}
 		} else {
 			t.right.InsertInOrder(value)
+
 		}
 	}
 	return nil
@@ -196,10 +208,37 @@ func InsertByList(list []int) *TreeNode {
 		return &TreeNode{}
 	}
 	tree := &TreeNode{}
-
+	is_created := 0
 	for _, value := range list {
-		tree.InsertInOrder(value)
+		if is_created == 0 {
+			tree = &TreeNode{val: value}
+			is_created = 1
+		} else {
+			tree.Insert(value)
+		}
+
 	}
+
+	return tree
+}
+
+func print(node *TreeNode) {
+	if node == nil {
+		return
+	}
+
+	node.left.PrintInorder()
+	fmt.Printf("%v ", node.val)
+	node.right.PrintInorder()
+
+}
+
+func insertSorted(tree *TreeNode, value int, slice *[]int) *TreeNode {
+	if tree == nil {
+		return nil
+	}
+	tree.Insert(value)
+	tree.AppendListInOrder(slice)
 	return tree
 }
 
@@ -207,12 +246,12 @@ func main() {
 	var slice []int
 
 	tree := &TreeNode{val: 454}
-	tree.InsertInOrder(100)
-	tree.InsertInOrder(20)
-	tree.InsertInOrder(200)
-	tree.InsertInOrder(70)
-	tree.InsertInOrder(550)
-	tree.InsertInOrder(80)
+	tree.Insert(100)
+	tree.Insert(20)
+	tree.Insert(200)
+	tree.Insert(70)
+	tree.Insert(550)
+	tree.Insert(80)
 
 	// if t.Find(80) {
 	// 	fmt.Println("Se encontro valor")
@@ -224,14 +263,28 @@ func main() {
 
 	// fmt.Println("")
 
-	tree.AppendListInOrder(&slice)
-	fmt.Println("")
-	printSlice(slice)
-	fmt.Println("")
+	fmt.Println("\n-----\n")
+	tree.Print()
+	fmt.Println("\n-----\n")
 
+	fmt.Println("\n-----\n")
+	tree.AppendListInOrder(&slice)
 	newtree := InsertByList(slice)
-	newtree.PrintInorder()
-	fmt.Println("")
+	newtree.Print()
+
+	printSlice(slice)
+
+	fmt.Println("\n-----\n")
+	// tree = &TreeNode{val: 454}
+	// tree = insertSorted(tree, 100, &slice)
+	// tree = insertSorted(tree, 20, &slice)
+	// tree = insertSorted(tree, 200, &slice)
+	// tree = insertSorted(tree, 70, &slice)
+	// tree = insertSorted(tree, 550, &slice)
+	// tree = insertSorted(tree, 80, &slice)
+	// tree = InsertByList(slice)
+	// tree.Print()
+	fmt.Println("\n-----\n")
 
 	fmt.Println("min is", tree.FindMin())
 	fmt.Println("max is", tree.FindMax())
